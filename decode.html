@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Caesar Cipher - Decoder</title>
+  <script>
+    function decodeChar(c, n) {
+      if (!c.match(/[a-zA-Z]/)) {
+        return c;
+      }
+
+      const base = c.toLowerCase() === c ? 'a' : 'A';
+      const offset = (c.charCodeAt(0) - base.charCodeAt(0) - n + 26) % 26; 
+      return String.fromCharCode(base.charCodeAt(0) + offset);
+    }
+
+    function decodeString(str, n) {
+      let decoded = '';
+      for (let i = 0; i < str.length; i++) {
+        decoded += decodeChar(str[i], n);
+      }
+      return decoded;
+    }
+
+    function process() {
+      const encodedText = document.getElementById('encodedText').value;
+      const shift = parseInt(document.getElementById('shift').value);
+
+      const decoded = decodeString(encodedText, shift);
+
+      document.getElementById('decodedText').textContent = decoded;
+    }
+  </script>
+  <style>
+ .cont{
+        padding: 10px;
+ background-color: #f9cbb7;
+ color: #000;
+position: absolute;
+  top: 50%;
+  left: 50%;
+   transform: translate(-50%, -50%);
+max-height: 500px;
+max-width: 600px;
+border: #000 1px solid;
+border-radius: 8px;
+    }
+    button{
+        color: #ffffff;
+        background-color: #19c2f1;
+        border: none;
+        border-radius: 5px;
+        padding: 3px;
+    }
+    button:hover{
+        color: #19c2f1;
+        background-color: #fff;
+    }
+    h1{
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="cont">
+  <h1>DECODE THE CHARACTERS</h1>
+
+  <label for="encodedText">Text:</label>
+  <textarea type="text" id="encodedText" ></textarea>
+
+  <label for="shift">Shift:</label>
+  <input type="number" id="shift" /><br><br>
+
+  <button onclick="process()"><b>Decode</b></button><br><br>
+
+  <p>Decoded Text:</p>
+  <p id="decodedText"></p>
+
+  </div>
+</body>
+</html>

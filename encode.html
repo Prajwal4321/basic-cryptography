@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Caesar Cipher-Encoder</title>
+  <script>
+    function encodeChar(c, n) {
+      if (!c.match(/[a-zA-Z]/)) {
+        return c;
+      }
+
+      const base = c.toLowerCase() === c ? 'a' : 'A';
+      const offset = (c.charCodeAt(0) - base.charCodeAt(0) + n) % 26;
+      return String.fromCharCode(base.charCodeAt(0) + offset);
+    }
+
+    function encodeString(str, n) {
+      let encoded = '';
+      for (let i = 0; i < str.length; i++) {
+        encoded += encodeChar(str[i], n);
+      }
+      return encoded;
+    }
+
+    function decodeString(str, n) {
+      return encodeString(str, -n);
+    }
+
+    function process() {
+      const text = document.getElementById('text').value;
+      const shift = parseInt(document.getElementById('shift').value);
+
+      const encoded = encodeString(text, shift);
+      const decoded = decodeString(encoded, shift);
+
+      document.getElementById('encoded').textContent = encoded;
+      document.getElementById('decoded').textContent = decoded;
+    }
+  </script>
+  <style>
+    .cont{
+        padding: 10px;
+ background-color: #f9cbb7;
+ color: #000;
+position: absolute;
+  top: 50%;
+  left: 50%;
+   transform: translate(-50%, -50%);
+max-height: 500px;
+max-width: 600px;
+border: #000 1px solid;
+border-radius: 8px;
+    }
+    button{
+        color: #ffffff;
+        background-color: #19c2f1;
+        border: none;
+        border-radius: 5px;
+        padding: 3px;
+    }
+    button:hover{
+        color: #19c2f1;
+        background-color: #fff;
+    }
+    h1{
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="cont">
+  <h1>ENCODE THE CHARACTERS</h1>
+
+  <label for="text">Text:</label>
+  <textarea type="text" id="text" ></textarea>
+
+  <label for="shift">Shift:</label>
+  <input type="number" id="shift" /><br><br>
+
+  <button onclick="process()"><b>Encode</b></button><br><br>
+
+  <p>Encoded Text:</p>
+  <p id="encoded"></p>
+
+  </div>
+</body>
+</html>
